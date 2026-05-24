@@ -38,6 +38,12 @@
   - `docs/llm-provider-routing.md` — DeepSeek 摄入 + Claude 查询双 provider 路由策略；含 trading-review-wiki 实际配置步骤、单次成本推导（DeepSeek 单篇摄入 ~$0.001 vs Claude Sonnet ~$0.05）、API key 申请速查、降级方案
   - `scripts/wiki/setup_wiki.sh` — 一条命令初始化 wiki 工作区：建目录骨架、复制 purpose/schema 模板、生成 index/log/overview、软链 4 个上游数据源（IMA/zsxq/wechat/research）、Obsidian 兼容配置
   - `scripts/wiki/README.md` — 设计原则（幂等、软链、跟 toolkit 解耦、跟 Obsidian 共用）+ 数据流图 + 搬家/分享/朋友 onboarding 指引
+- **S5 完整交付**（双引擎查询习惯 + 可选高阶功能）:
+  - `docs/dual-engine-workflow.md` — trading-review-wiki vs IMA 分工准则、典型场景对照表、互查回环、一天/一周的实际用法、避坑指南
+  - `docs/weekly-review-checklist.md` — 5-10 分钟周巡检（数据源健康 + wiki 应用 + 内容回顾 + 噪音清理 + LLM 账单 + 反思），含可拷贝的复盘模板
+  - `docs/wechat-mcp-setup.md` — 盘中关键词实时通知 SOP（基于 Cybing521/wechat-mcp）；含配置示例、长期常驻 launchd plist、A 股研究关键词模板、隐私合规
+  - `docs/research-pdf-ingest.md` — 历史 PDF 批量导入完整流程：命名规范、目录归档、provider 选择（DeepSeek V4-Pro Thinking 性价比最优）、分批策略、质量检查
+  - `README.md` 重写：Sprint 进度表 → 功能矩阵；新增整体架构图、5 阶段快速开始、完整仓库结构、安全 license 提醒
 
-### Pending
-- S5：双引擎查询习惯（trading-review-wiki + IMA 互查工作流）、wechat-mcp 关键词通知（可选）、迭代
+### Status
+全部 5 个 Sprint 已交付。后续以"使用 + 迭代"为主，不再有新 Sprint。
