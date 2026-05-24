@@ -1,0 +1,76 @@
+# =============================================================
+# ZsxqCrawler 配置 · trading-research-toolkit 使用
+# -------------------------------------------------------------
+# 拷贝为 config.toml 后填真实值（config.toml 已被 .gitignore 拦）
+# =============================================================
+
+[auth]
+# 浏览器 DevTools → Application → Cookies → zsxq_access_token
+# 拿法详见 ../../docs/zsxq-cookie-sop.md
+access_token = "PASTE-YOUR-ZSXQ-ACCESS-TOKEN-HERE"
+
+# 浏览器 User-Agent，建议直接拷你浏览器实际的 UA
+# DevTools → Network → 任意请求 → Request Headers → User-Agent
+user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+
+
+# =============================================================
+# 要同步的星球（可填多个 group）
+# group_id 从星球 URL 取：https://wx.zsxq.com/group/<group_id>
+# =============================================================
+
+[[groups]]
+group_id = "88888888888888"
+# 给这个星球起个本地别名（会出现在 output 路径里，方便 trading-review-wiki 识别）
+alias = "示例星球-A股研究"
+# 是否只拉精华（True 省时省 token；False 全量）
+only_digests = false
+# 是否下载图片附件
+download_attachments = true
+
+# 如果只想同步星球内某些专栏（columns），填 column_id；不填 = 全部
+# column_id 从专栏 URL 取
+columns = []   # 例：["12345", "67890"]
+
+
+[[groups]]
+group_id = "99999999999999"
+alias = "示例星球-龙头战法"
+only_digests = true     # 只精华
+download_attachments = false
+columns = []
+
+
+# =============================================================
+# 抓取行为
+# =============================================================
+
+[crawl]
+# 每次 API 请求间的延迟（秒），降低被风控的概率
+request_delay = 1.5
+
+# 单次最多拉多少话题（增量模式下基本到不了上限）
+max_topics_per_run = 1000
+
+# 重试次数
+retries = 3
+
+
+# =============================================================
+# 输出路径
+# =============================================================
+
+[output]
+# ZsxqCrawler 输出根目录（绝对路径或相对 ~/ZsxqCrawler 的相对路径）
+articles_dir = "~/ZsxqCrawler/output/articles"
+attachments_dir = "~/ZsxqCrawler/output/attachments"
+db_path = "~/ZsxqCrawler/output/state.db"
+
+# 软链 / 复制到 trading-review-wiki 的 raw/sources/ 路径
+# 不存在会自动 mkdir
+wiki_link_target = "~/wiki/raw/sources/zsxq"
+
+# 软链模式：
+#   symlink — 推荐，零拷贝，wiki 自动跟随原文件更新
+#   copy    — 拷贝实文件，跨设备（rsync 到 Mac）时用
+link_mode = "symlink"

@@ -1,0 +1,47 @@
+# =============================================================
+# zsxq-daily.service · Linux systemd 服务
+# -------------------------------------------------------------
+# 配合 zsxq-daily.timer 使用。安装:
+#   sudo cp zsxq-daily.service.example /etc/systemd/system/zsxq-daily.service
+#   sudo cp zsxq-daily.timer.example   /etc/systemd/system/zsxq-daily.timer
+#   # 编辑两个文件，改 User= 和 WorkingDirectory= ExecStart=
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now zsxq-daily.timer
+#
+# 手动触发一次:
+#   sudo systemctl start zsxq-daily.service
+#   journalctl -u zsxq-daily -f
+# =============================================================
+
+[Unit]
+Description=ZsxqCrawler daily incremental sync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+
+# 跑这个 service 的 Linux 用户（必须有 ~/ZsxqCrawler 和 ~/trading-research-toolkit）
+User=ubuntu
+Group=ubuntu
+
+WorkingDirectory=/home/ubuntu/trading-research-toolkit/scripts/zsxq
+
+# uv 默认装在用户 ~/.local/bin，需要包含
+Environment=PATH=/home/ubuntu/.local/bin:/usr/local/bin:/usr/bin:/bin
+
+# 如果你要把结果 rsync 到 Mac，在这里加 --rsync-to 参数:
+#   ExecStart=/usr/bin/bash /home/ubuntu/trading-research-toolkit/scripts/zsxq/zsxq_daily.sh --rsync-to user@mac.local:/Users/YOURNAME/wiki/raw/sources/zsxq/
+ExecStart=/usr/bin/bash /home/ubuntu/trading-research-toolkit/scripts/zsxq/zsxq_daily.sh
+
+# 失败时重试 1 次（避免临时网络问题）
+Restart=on-failure
+RestartSec=600
+StartLimitBurst=2
+
+# 输出
+StandardOutput=append:/var/log/zsxq-daily.log
+StandardError=append:/var/log/zsxq-daily.err
+
+[Install]
+WantedBy=multi-user.target

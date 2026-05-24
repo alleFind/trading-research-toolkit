@@ -1,0 +1,23 @@
+# =============================================================
+# zsxq-daily.timer · Linux systemd 定时器
+# =============================================================
+
+[Unit]
+Description=Trigger zsxq-daily.service every day at 04:00
+Requires=zsxq-daily.service
+
+[Timer]
+# 每天凌晨 4 点跑（低峰，星球风控最宽松）
+OnCalendar=*-*-* 04:00:00
+
+# 如果机器在触发时间挂了，开机后立刻补跑
+Persistent=true
+
+# 随机延迟 0~300 秒，分散同 timer 的负载（多机部署时有用）
+RandomizedDelaySec=300
+
+# 服务单元名
+Unit=zsxq-daily.service
+
+[Install]
+WantedBy=timers.target
