@@ -1,0 +1,91 @@
+# =========================================
+# 敏感数据 - 永远不要 commit
+# =========================================
+
+# API Keys / Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+**/api-keys.json
+
+# Cookie / Token
+**/cookies.txt
+**/cookie.json
+**/zsxq_token.txt
+**/wechat_keys.json
+**/all_keys.json
+
+# 抓取下来的数据（绝对不能 commit）
+data/
+output/
+**/raw/
+**/articles/
+**/attachments/
+**/downloads/
+*.db
+*.sqlite
+*.sqlite3
+
+# 个人化的真实 configs（只 commit .example）
+configs/launchd/*.plist
+configs/cron/crontab
+scripts/**/config.toml
+!**/*.example
+
+# 群名、星球名等敏感占位符的真实替换
+**/.local.*
+
+# =========================================
+# Python
+# =========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =========================================
+# Node / JS（如果以后加）
+# =========================================
+node_modules/
+.npm
+.yarn
+
+# =========================================
+# macOS
+# =========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# =========================================
+# IDE
+# =========================================
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+
+# =========================================
+# Logs
+# =========================================
+*.log
+logs/
