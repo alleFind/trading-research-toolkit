@@ -1,0 +1,16 @@
+[Unit]
+Description=Daily WeChat group ingest for trading-review-wiki
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# 必须有桌面环境登陆 + WeChat 开着，所以本服务通常只在桌面用户 session 下生效
+EnvironmentFile=%h/.config/trading-research-toolkit/wechat.env
+ExecStart=/usr/bin/env bash %h/code/trading-research-toolkit/scripts/wechat/wechat_daily.sh
+StandardOutput=append:%h/.local/state/trading-research-toolkit/wechat-daily.log
+StandardError=append:%h/.local/state/trading-research-toolkit/wechat-daily.err.log
+Nice=10
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Run wechat-daily once a day at 21:30
+Requires=wechat-daily.service
+
+[Timer]
+# 每天 21:30 触发；OnCalendar 用本地时区
+OnCalendar=*-*-* 21:30:00
+Persistent=true
+RandomizedDelaySec=10min
+Unit=wechat-daily.service
+
+[Install]
+WantedBy=timers.target

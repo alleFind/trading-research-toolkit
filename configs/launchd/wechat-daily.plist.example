@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  macOS launchd 任务：每天 21:30 抓昨天微信群聊
+  目的：盘后市场情绪沉淀后再抓，能完整覆盖当天讨论
+
+  安装步骤：
+    1) 把 USERNAME / ABS_PATH 替换为你自己的
+    2) 文件复制到 ~/Library/LaunchAgents/com.alleFind.wechat-daily.plist
+    3) launchctl load -w ~/Library/LaunchAgents/com.alleFind.wechat-daily.plist
+    4) 测试: launchctl start com.alleFind.wechat-daily
+    5) 卸载: launchctl unload ~/Library/LaunchAgents/com.alleFind.wechat-daily.plist
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.alleFind.wechat-daily</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-lc</string>
+        <string>/Users/USERNAME/code/trading-research-toolkit/scripts/wechat/wechat_daily.sh</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>WECHAT_ENV</key>
+        <string>/Users/USERNAME/.config/trading-research-toolkit/wechat.env</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>21</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/USERNAME/Library/Logs/wechat-daily.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/USERNAME/Library/Logs/wechat-daily.err.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

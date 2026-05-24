@@ -31,8 +31,12 @@ output/
 
 # 个人化的真实 configs（只 commit .example）
 configs/launchd/*.plist
+configs/systemd/*.service
+configs/systemd/*.timer
 configs/cron/crontab
 scripts/**/config.toml
+scripts/**/*.env
+scripts/**/aliases.json
 !**/*.example
 
 # 群名、星球名等敏感占位符的真实替换
